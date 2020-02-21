@@ -1,3 +1,22 @@
 apiVersion: v1
-entries: {}
-generated: "2020-02-19T09:31:33.9662625+11:00"
+entries:
+  cryofall-server:
+  - apiVersion: v2
+    appVersion: "0.25"
+    created: "2020-02-21T19:21:05.1830474+11:00"
+    description: Cryofall game server in Kubernetes
+    digest: 365f45a2c4b12c0cd3d35f19fe070c7e11ea4f5fe3c606eac6b8f45f52b8e2b4
+    icon: http://press.atomictorch.com/cryofall/logos/icon_512.png
+    keywords:
+    - game
+    - server
+    maintainers:
+    - email: support@grumpyleopard.com
+      name: Grumpy Leopard
+    - name: JyeGuru
+    name: cryofall-server
+    type: application
+    urls:
+    - charts/cryofall-server-0.1.0.tgz
+    version: 0.1.0
+generated: "2020-02-21T19:21:05.1830474+11:00"

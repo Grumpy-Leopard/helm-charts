@@ -7,9 +7,9 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+    - port: {{ .Values.service.port | int }}
+      targetPort: cryofall
+      protocol: UDP
+      name: cryofall
   selector:
     {{- include "cryofall-server.selectorLabels" . | nindent 4 }}
