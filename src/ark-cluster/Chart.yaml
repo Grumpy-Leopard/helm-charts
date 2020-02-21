@@ -1,0 +1,14 @@
+apiVersion: v2
+name: ark-cluster
+version: 0.1.0
+appVersion: Steam
+
+description: A Helm chart for deploying an Ark Survival Evolved dedicated game server cluster
+icon: https://i.imgur.com/NRY0Wvg.png
+type: application
+keywords:
+  - game
+maintainers:
+  - name: JyeGuru
+  - name: Grumpy Leopard
+    email: support@grumpyleopard.com
