@@ -25,6 +25,7 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          args: ["loadOrNew"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: cryofall
