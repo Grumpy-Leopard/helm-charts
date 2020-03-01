@@ -1,55 +1,55 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "ark-cluster.fullname" . }}
-  labels:
-    {{- include "ark-cluster.labels" . | nindent 4 }}
+  name: "ark-cluster"
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: 1
   selector:
     matchLabels:
-      {{- include "ark-cluster.selectorLabels" . | nindent 6 }}
+      app: "ark-cluster"
   template:
     metadata:
       labels:
-        {{- include "ark-cluster.selectorLabels" . | nindent 8 }}
+        app: "ark-cluster"
     spec:
-    {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
-      serviceAccountName: {{ include "ark-cluster.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: "installdir"
+          persistentVolumeClaim:
+            claimName: "installdir"
+        - name: "saves"
+          persistentVolumeClaim:
+            claimName: "saves"
+      initContainers:
+        - name: "installer"
+          image: "grumpyleopard/arkserver-init"
+          volumeMounts:
+            - name: "installdir"
+              mountPath: "/home/steam/ark"
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-    {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
-    {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+        {{- $clusterid := .Values.clusterID -}}
+        {{- $maxplayers := .Values.maxPlayers -}}
+        {{- $activeevent := .Values.activeEvent -}}
+        {{- $sessionname := .Values.sessionNameBase -}}
+        {{- range .Values.instance }}
+        - name: {{ .map | lower | replace "_" "-" | quote }}
+          image: "grumpyleopard/arkserver"
+          volumeMounts:
+            - name: "installdir"
+              mountPath: "/home/steam/ark"
+              readOnly: true
+            - name: "saves"
+              mountPath: "/home/steam/ark/ShooterGame/Saved"
+          env:
+            - name: "MAP"
+              value: {{ .map | quote }}
+            - name: "QUERYPORT"
+              value: {{ .port }}
+            - name: "SESSIONNAME"
+              value: {{ printf "%s - %s" $sessionname .name | quote }}
+            - name: "CLUSTERID"
+              value: {{ $clusterid | quote }}
+            - name: "MAXPLAYERS"
+              value: {{ $maxplayers }}
+            - name: "ACTIVEEVENT"
+              value: {{ $activeevent | quote }}
+        {{- end }}

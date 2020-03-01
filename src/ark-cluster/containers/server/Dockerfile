@@ -15,8 +15,8 @@ ENV MAP="TheIsland" \
     PORT="7777" \
     QUERYPORT="27015" \
     RCONPORT="32330" \
-    SERVERADMINPASSWORD="YouShouldChangeThisWhenDeploying" \
     MAXPLAYERS="50" \
+    ACTIVEEVENT="None" \
     CLUSTERID=""
 
 VOLUME /home/steam/ark

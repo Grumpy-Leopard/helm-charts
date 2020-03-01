@@ -1,15 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "ark-cluster.fullname" . }}
-  labels:
-    {{- include "ark-cluster.labels" . | nindent 4 }}
+  name: "ark-cluster"
 spec:
-  type: {{ .Values.service.type }}
+  type: NodePort
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    {{- range .Values.instance }}
+    - port: {{ .port }}
+      name: {{ .map | lower | replace "_" "-" | quote }}
       protocol: TCP
-      name: http
-  selector:
-    {{- include "ark-cluster.selectorLabels" . | nindent 4 }}
+    {{- end }}
+    
