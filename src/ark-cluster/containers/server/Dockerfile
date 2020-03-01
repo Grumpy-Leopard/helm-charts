@@ -5,7 +5,7 @@ LABEL maintainer="support@grumpyleopard.com"
 WORKDIR /home/steam
 USER steam
 
-COPY --chown=steam:steam run-ark-server.sh ./run-ark-server.sh
+COPY --chown=steam:steam ./run-ark-server.sh ./run-ark-server.sh
 RUN mkdir -p /home/steam/ark/ShooterGame/Saved/SavedArks \
     && chmod +x ./run-ark-server.sh
 
