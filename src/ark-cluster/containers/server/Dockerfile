@@ -1,5 +1,7 @@
 FROM cm2network/steamcmd
 
+LABEL maintainer="support@grumpyleopard.com"
+
 WORKDIR /home/steam
 USER steam
 
