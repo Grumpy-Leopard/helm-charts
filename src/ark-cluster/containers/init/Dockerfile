@@ -5,7 +5,7 @@ LABEL maintainer="support@grumpyleopard.com"
 WORKDIR /home/steam
 USER steam
 
-RUN mkdir -p /home/steam/ark
+RUN mkdir -p mkdir -p /home/steam/ark/ShooterGame/Saved/SavedArks
 
 VOLUME /home/steam/ark
 
