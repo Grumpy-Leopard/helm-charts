@@ -43,13 +43,13 @@ spec:
             - name: "MAP"
               value: {{ .map | quote }}
             - name: "QUERYPORT"
-              value: {{ .port }}
+              value: {{ .port | quote }}
             - name: "SESSIONNAME"
               value: {{ printf "%s - %s" $sessionname .name | quote }}
             - name: "CLUSTERID"
               value: {{ $clusterid | quote }}
             - name: "MAXPLAYERS"
-              value: {{ $maxplayers }}
+              value: {{ $maxplayers | quote }}
             - name: "ACTIVEEVENT"
               value: {{ $activeevent | quote }}
         {{- end }}
